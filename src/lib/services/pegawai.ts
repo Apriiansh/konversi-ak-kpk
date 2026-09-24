@@ -1,3 +1,4 @@
+import { AppError } from "@/lib/errors";
 import { query } from "../db";
 import { formatDate } from "../utils/date";
 import type { Pegawai, PegawaiRow } from "@/types";
@@ -44,7 +45,7 @@ export async function getPegawai(id: string): Promise<Pegawai> {
   );
 
   const row = rows[0];
-  if (!row) throw new Error(`Pegawai tidak ditemukan: ${id}`);
+  if (!row) throw new AppError(404, `Pegawai tidak ditemukan: ${id}`);
 
   return selectPegawai(row);
 }

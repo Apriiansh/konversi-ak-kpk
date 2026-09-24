@@ -27,6 +27,7 @@ import type {
   StatusKelayakan,
   Triwulan,
 } from "@/types";
+import { AppError } from "@/lib/errors";
 
 const toNumber = (v: string | null): number => Number(v ?? 0);
 const r3 = roundDecimal;
@@ -89,17 +90,17 @@ async function muatKonteks(pegawaiId: string): Promise<KonteksOperasi> {
 
 function validasiTahun(tahun: number): void {
   if (!Number.isInteger(tahun) || tahun < 2000 || tahun > 2100) {
-    throw new Error(`Tahun tidak valid: ${tahun}`);
+    throw new AppError(400, `Tahun tidak valid: ${tahun}`);
   }
 }
 
 function validasiPredikat(predikat: Predikat, m: MasterKonversi): void {
-  if (!(predikat in m.persentase)) throw new Error(`Predikat tidak dikenal: ${predikat}`);
+  if (!(predikat in m.persentase)) throw new AppError(400, `Predikat tidak dikenal: ${predikat}`);
 }
 
 function validasiJumlahBulan(jumlahBulan: number): void {
   if (!Number.isInteger(jumlahBulan) || jumlahBulan < 0 || jumlahBulan > 12) {
-    throw new Error(`Jumlah bulan harus 0–12, didapat ${jumlahBulan}`);
+    throw new AppError(400, `Jumlah bulan harus 0–12, didapat ${jumlahBulan}`);
   }
 }
 
@@ -227,7 +228,7 @@ async function dapatkanPenetapan(
 
 function periksaTidakTerkunci(penetapan: PenetapanRowDb): void {
   if (penetapan.is_locked) {
-    throw new Error(`Periode tahun ${penetapan.tahun} sudah dikunci dan tidak dapat diubah.`);
+    throw new AppError(409, `Periode tahun ${penetapan.tahun} sudah dikunci dan tidak dapat diubah.`);
   }
 }
 
@@ -272,7 +273,7 @@ async function finalisasiTahunan(
   akBooster = 0,
 ): Promise<HasilSinkron> {
   const tw4 = await findDataKinerja(client, pegawaiId, tahun, 4);
-  if (!tw4) throw new Error("TW4 belum diisi — tahun belum bisa difinalisasi.");
+  if (!tw4) throw new AppError(409, "TW4 belum diisi — tahun belum bisa difinalisasi.");
 
   const penetapan = await dapatkanPenetapan(client, pegawaiId, tahun, ctx.m.akDasar[ctx.pegawai.golongan] ?? 0);
   periksaTidakTerkunci(penetapan);
@@ -419,7 +420,7 @@ export async function perbaruiKinerja(
       [id],
     );
     const row = rows[0];
-    if (!row) throw new Error(`Data kinerja tidak ditemukan: ${id}`);
+    if (!row) throw new AppError(404, `Data kinerja tidak ditemukan: ${id}`);
 
     const ctx = await muatKonteks(row.pegawai_id);
     validasiPredikat(perubahan.predikat, ctx.m);
@@ -456,7 +457,7 @@ export async function hapusKinerja(id: string): Promise<HasilSimpanKinerja> {
       [id],
     );
     const row = rows[0];
-    if (!row) throw new Error(`Data kinerja tidak ditemukan: ${id}`);
+    if (!row) throw new AppError(404, `Data kinerja tidak ditemukan: ${id}`);
 
     const ctx = await muatKonteks(row.pegawai_id);
     const penetapan = await findPenetapan(client, row.pegawai_id, row.tahun);
@@ -569,5 +570,5 @@ export async function simulasiKinerja(input: InputKinerja): Promise<HasilSimulas
 }
 
 function validasiTriwulan(triwulan: number): void {
-  if (![1, 2, 3, 4].includes(triwulan)) throw new Error(`Triwulan tidak valid: ${triwulan}`);
+  if (![1, 2, 3, 4].includes(triwulan)) throw new AppError(400, `Triwulan tidak valid: ${triwulan}`);
 }
