@@ -1,4 +1,4 @@
-import { kinerjaPeriodik, kinerjaTahunan } from "./calculate-ak";
+import { kinerjaPeriodik } from "./calculate-ak";
 import type { MasterKonversi, Golongan, Jenjang, Predikat } from "@/types/master";
 import { akPeningkatanPendidikan } from "./ak-ijazah";
 import { hitungBulanAktif } from "../utils/number";
@@ -20,7 +20,7 @@ export function setahunkan(
   m: MasterKonversi,
   bulanAktif = 12,
 ): number {
-  return kinerjaTahunan(jenjang, predikat_tw4, bulanAktif, m);
+  return kinerjaPeriodik(jenjang, predikat_tw4, bulanAktif, m);
 }
 
 interface PredikatTriwulan {

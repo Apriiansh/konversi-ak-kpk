@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
   kinerjaPeriodik,
-  kinerjaTahunan,
 } from "./calculate-ak";
 import { MASTER_FIXTURE } from "./master.fixture";
 
@@ -25,16 +24,8 @@ describe("kinerjaPeriodik", () => {
   it("rounding ke 3 desimal", () => {
     expect(kinerjaPeriodik("AHLI_MADYA", "BUTUH_PERBAIKAN", 5, MASTER_FIXTURE)).toBe(11.719);
   });
-});
 
-describe("kinerjaTahunan", () => {
-  it("setara dengan kinerjaPeriodik", () => {
-    expect(kinerjaTahunan("AHLI_MUDA", "SANGAT_KURANG", 12, MASTER_FIXTURE)).toBe(
-      kinerjaPeriodik("AHLI_MUDA", "SANGAT_KURANG", 12, MASTER_FIXTURE),
-    );
-  });
-
-  it("predikat SANGAT_KURANG tahun penuh", () => {
-    expect(kinerjaTahunan("AHLI_UTAMA", "SANGAT_KURANG", 12, MASTER_FIXTURE)).toBe(12.5);
+  it("predikat SANGAT_KURANG tahun penuh (12 bulan)", () => {
+    expect(kinerjaPeriodik("AHLI_UTAMA", "SANGAT_KURANG", 12, MASTER_FIXTURE)).toBe(12.5);
   });
 });

@@ -7,11 +7,16 @@ export const MASTER_FIXTURE: MasterKonversi = {
     AHLI_MADYA: 37.5,
     AHLI_UTAMA: 50,
   },
-  targetPangkat: {
-    AHLI_PERTAMA: 50,
-    AHLI_MUDA: 100,
-    AHLI_MADYA: 150,
-    AHLI_UTAMA: 200,
+  akDasar: {
+    "III/a": 0,
+    "III/b": 50,
+    "III/c": 0,
+    "III/d": 100,
+    "IV/a": 0,
+    "IV/b": 150,
+    "IV/c": 300,
+    "IV/d": 0,
+    "IV/e": 200,
   },
   kebutuhanJenjang: {
     AHLI_PERTAMA: 100,
