@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "Konversi AK KPK API",
+    "description": "Collection untuk testing API pada project konversi-ak-kpk",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Pegawai",
+      "item": [
+        {
+          "name": "GET /api/pegawai",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/pegawai",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "pegawai"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Kinerja",
+      "item": [
+        {
+          "name": "GET /api/kinerja",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kinerja?pegawaiId={{pegawaiId}}&tahun={{tahun}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kinerja"
+              ],
+              "query": [
+                {
+                  "key": "pegawaiId",
+                  "value": "{{pegawaiId}}"
+                },
+                {
+                  "key": "tahun",
+                  "value": "{{tahun}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/kinerja",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pegawaiId\": \"{{pegawaiId}}\",\n  \"tahun\": {{tahun}},\n  \"triwulan\": 1,\n  \"predikat\": \"BAIK\",\n  \"jumlahBulan\": 3,\n  \"sumber\": \"MANUAL\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/kinerja",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kinerja"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST /api/kinerja/simulasi",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pegawaiId\": \"{{pegawaiId}}\",\n  \"tahun\": {{tahun}},\n  \"triwulan\": 1,\n  \"predikat\": \"BAIK\",\n  \"jumlahBulan\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/kinerja/simulasi",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kinerja",
+                "simulasi"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PUT /api/kinerja/:id",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"predikat\": \"SANGAT_BAIK\",\n  \"jumlahBulan\": 6\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/kinerja/{{kinerjaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kinerja",
+                "{{kinerjaId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE /api/kinerja/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/kinerja/{{kinerjaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "kinerja",
+                "{{kinerjaId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "pegawaiId",
+      "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "type": "string"
+    },
+    {
+      "key": "tahun",
+      "value": "2025",
+      "type": "string"
+    },
+    {
+      "key": "kinerjaId",
+      "value": "c7f44cb1-d2d9-4d68-b93b-0e72103dfad8",
+      "type": "string"
+    }
+  ]
+}

@@ -10,6 +10,5 @@ const hitungKinerja = (
 ) =>
   roundDecimal((bulanAktif / 12) * m.persentase[predikat] * m.koefisien[jenjang]);
 
-// Kinerja Periodik / per Triwulan
+// Kinerja Periodik / per Triwulan (dan tahunan = 12 bulan penuh)
 export const kinerjaPeriodik = hitungKinerja;
-export const kinerjaTahunan = hitungKinerja;

@@ -9,11 +9,12 @@ export type AsalJabatan =
 
 export interface MasterKonversi {
   koefisien: Record<Jenjang, number>;
-  targetPangkat: Record<Jenjang, number>;
   kebutuhanJenjang: Record<Jenjang, number>;
   golonganPerJenjang: Record<Jenjang, Golongan[]>;
   golonganJenjang: Record<Golongan, Jenjang>;
   kebutuhanPangkat: Record<Golongan, number>;   // 0 => pakai kebutuhanJenjang
+  akDasar: Record<Golongan, number>;            // saldo dasar saat golongan diduduki (golongan.ak_dasar)
   persentase: Record<Predikat, number>;
   jenjangPerJabatan: Record<AsalJabatan, Jenjang | null>;
 }
+
