@@ -79,4 +79,110 @@ export async function getMasterKonversi(): Promise<MasterKonversi> {
     persentase,
     jenjangPerJabatan,
   };
+
 }
+
+// jenjang code
+
+// Update
+export async function updateJenjang(
+  kode: string,
+  nama: string,
+  koefisienTahunan: number,
+  targetAkKenaikanPangkat: number,
+  targetAkKenaikanJenjang: number,
+) {
+  const result = await query(
+    `
+    UPDATE jenjang
+    SET
+      nama= $1,
+      koefisien_tahunan = $2,
+      target_ak_kenaikan_pangkat = $3,
+      target_ak_kenaikan_jenjang = $4
+    WHERE kode = $5
+    RETURNING *
+    `,
+    [
+      nama,
+      koefisienTahunan,
+      targetAkKenaikanPangkat,
+      targetAkKenaikanJenjang,
+      kode,
+    ],
+  );
+
+  return result.rows[0];
+}
+// Select
+export async function getAllJenjang() {
+  const result = await query<JenjangRow>(
+    `
+    SELECT
+      kode,
+      nama,
+      koefisien_tahunan,
+      target_ak_kenaikan_pangkat,
+      target_ak_kenaikan_jenjang
+    FROM jenjang
+    ORDER BY kode
+    `,
+  );
+
+  return result.rows;
+}
+// Select By Kode
+export async function getJenjangByKode(kode: string) {
+  const result = await query<JenjangRow>(
+    `
+    SELECT
+      kode,
+      koefisien_tahunan,
+      target_ak_kenaikan_pangkat,
+      target_ak_kenaikan_jenjang
+    FROM jenjang
+    WHERE Kode = $1
+    `,
+    [kode]
+  );
+
+  return result.rows;
+}
+// Create
+export async function createJenjang(
+  kode: string,
+  nama: string,
+  koefisienTahunan: number,
+  targetAkKenaikanPangkat: number,
+  targetAkKenaikanJenjang: number,
+) {
+  const result = await query(
+    `
+    INSERT INTO jenjang (
+      kode,
+      nama,
+      koefisien_tahunan,
+      target_ak_kenaikan_pangkat,
+      target_ak_kenaikan_jenjang
+    )
+    VALUES (
+      $1,
+      $2,
+      $3,
+      $4,
+      $5
+    )
+    RETURNING *
+    `,
+    [
+      kode,
+      nama,
+      koefisienTahunan,
+      targetAkKenaikanPangkat,
+      targetAkKenaikanJenjang,
+    ],
+  );
+
+  return result.rows[0];
+}
+// Delete
